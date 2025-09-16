@@ -66,15 +66,19 @@ Tags can also be incredibly useful when coupled with automations in [**GitHub Ac
 
 `stash` allows you to save your in-progress changes, whether they are staged or unstaged, and puts them aside while reverting your working directory back to `HEAD`.
 
-### Recovering or Applying a Stash
+Note that stashes are stored in the order you create them, and are zero-indexed, which means the newest/latest stash will always be `0`.
+
+### Viewing, Recovering or Applying a Stash
 Git stores `stash`es in a list that can be reviewed and applied later, if you want to bring those changed files back in. As you add more stashes, the most recent will be indexed `0`.
 
 To see all available stashes:
+
 ```
 $ git stash list
 stash@{0}: WIP on main: 26393a3 Another commit
 stash@{1}: WIP on main: 4d931c4 Testing rebase
 ```
+
 If you have one or more stashes listed, you have a choice to either `apply` or `pop`
 the stash, which are two forms of pulling the changed file(s) back into your working
 directory.
@@ -82,7 +86,7 @@ directory.
 **`git stash apply 0`** - applies the changed file(s) of the stash into your project but
 leaves the stash. The `0` in this command indicates the index number of the stash.
 
-**`git stash pop 2``** - applies the changed file(s) of the stash into your project but
+**`git stash pop 2`** - applies the changed file(s) of the stash into your project but
 deletes the stash. The `2` in this command indicates the index number of your stash.
 
 ```
