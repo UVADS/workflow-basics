@@ -2,7 +2,7 @@
 layout: default
 title: 4 - Advanced Git
 nav_order: 6
-last_modified_date: "2025-05-06 10:46AM"
+last_modified_date: "2025-09-16 10:46AM"
 ---
 
 # Advanced `git`
@@ -75,17 +75,38 @@ $ git stash list
 stash@{0}: WIP on main: 26393a3 Another commit
 stash@{1}: WIP on main: 4d931c4 Testing rebase
 ```
-If you have only one stash listed, or you want to use the most recent stash (with index `0`), you can pull those files/changes back into your branch with
-```
-$ git stash pop
-```
+If you have one or more stashes listed, you have a choice to either `apply` or `pop`
+the stash, which are two forms of pulling the changed file(s) back into your working
+directory.
 
-If you have more than one stash listed and want to specify which you want to re-incorporate, you need to `apply` the stash by index (`0`, `1`, `2`, ...)
+**`git stash apply 0`** - applies the changed file(s) of the stash into your project but
+leaves the stash. The `0` in this command indicates the index number of the stash.
+
+**`git stash pop 2``** - applies the changed file(s) of the stash into your project but
+deletes the stash. The `2` in this command indicates the index number of your stash.
+
 ```
+$ git stash apply <INDEX>
 $ git stash pop <INDEX>
 ```
 
+However, it is not always obvious what a stash contains, or what changes were incorporated
+into it. You can find out more about stashes with these commands:
+
+To show a summary of changes in a stash:
+
+```
+$ git stash show stash@{<index>}
+```
+
+To show a detailed patch view within a stash:
+
+```
+$ git stash show -p stash@{<index>}
+```
+
 ### Create a Branch from a Stash
+
 There are other powerful stash options, such as creating a new branch based on the stash. To do this, list your stashes first to identify the index of the stash you want to work with:
 
 ```
