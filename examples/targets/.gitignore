@@ -1,0 +1,23 @@
+# Targets pipeline files
+_targets/
+_targets.yaml
+
+# Results directory
+results/
+
+# Data directory (if used)
+data/
+
+# R environment files
+.Renviron
+.Rhistory
+.RData
+.Ruserdata
+
+# RStudio files
+.Rproj.user/
+
+# Temporary files
+*.tmp
+*.log
+

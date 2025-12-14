@@ -454,7 +454,7 @@ if __name__ == "__main__":
 
 ### All Example Scripts
 
-You can find the example scripts and notebooks in the [examples folder](/examples/python/prefect) in the Git repository.
+You can find the example scripts and notebooks in the [examples folder](/examples/prefect) in the Git repository.
 
 ## Advanced Topics
 

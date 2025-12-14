@@ -13,6 +13,7 @@ Before you begin, ensure you have:
 - A GitHub account
 - Basic familiarity with command-line tools
 - Understanding of version control concepts
+- Experience with Python or R, and a little bit of bash scripting
 
 ## Quick Start
 
@@ -20,8 +21,5 @@ Before you begin, ensure you have:
 2. Follow the configuration steps
 3. Start creating your workflows
 
-## Next Steps
 
-- [Prefect]({{ site.baseurl }}/docs/python/prefect/)
-- [Dagster]({{ site.baseurl }}/docs/python/dagster/)
 

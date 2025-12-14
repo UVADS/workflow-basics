@@ -209,7 +209,8 @@ Save this file as `simple_data_pipeline.py` in your `~/airflow/dags/` directory.
 
 ## All Example Scripts
 
-[/examples/airflow]
+You can find the example scripts and notebooks in the [examples folder](/examples/airflow/) in the Git repository.
+
 
 ## Advanced Topics
 

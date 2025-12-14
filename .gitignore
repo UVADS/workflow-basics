@@ -3,3 +3,6 @@ _extras/*
 _site
 _site/*
 .DS_Store
+**/.DS_Store
+.ipynb_checkpoints
+**/.ipynb_checkpoints/
