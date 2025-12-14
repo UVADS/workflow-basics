@@ -1,12 +1,9 @@
 ---
 layout: default
-title: Setup
-nav_order: 2
+title: Tools
+nav_order: 4
 has_children: true
 ---
-
-# Setup
-
 This section covers the initial setup and configuration of workflow automation tools.
 
 ## Prerequisites
@@ -25,6 +22,6 @@ Before you begin, ensure you have:
 
 ## Next Steps
 
-- [Installation]({{ site.baseurl }}{% link docs/setup/installation.md %})
-- [Configuration]({{ site.baseurl }}{% link docs/setup/configuration.md %})
+- [Prefect]({{ site.baseurl }}/docs/python/prefect/)
+- [Dagster]({{ site.baseurl }}/docs/python/dagster/)
 
