@@ -740,6 +740,7 @@ Prefect offers a wide range of integrations through `prefect-*` packages that ex
 
 - **`prefect-sqlalchemy`** - Database connectivity using SQLAlchemy
 - **`prefect-snowflake`** - Snowflake data warehouse integration
+- **`prefect-dbt`** - Integration with dbt (data build tool) for analytics engineering workflows
 - **`prefect-bigquery`** - Google BigQuery integration
 - **`prefect-postgres`** - PostgreSQL database integration
 - **`prefect-redis`** - Redis database integration

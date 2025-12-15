@@ -13,7 +13,6 @@ This section covers the initial setup and configuration of workflow automation t
 
 Before you begin, ensure you have:
 
-- A GitHub account
 - Basic familiarity with command-line tools
 - Understanding of version control concepts
 - Experience with Python or R, and a little bit of bash scripting

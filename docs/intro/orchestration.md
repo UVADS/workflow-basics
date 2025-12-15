@@ -17,7 +17,7 @@ nav_order: 20
 
 ## Orchestration, Execution, Scheduling
 
-The **orchestrator** defines workflow structure and task dependencies, the **execution engine** runs tasks on available compute resources, and the **resource scheduler** manages and allocates compute resources (CPU, memory, storage) to meet workflow demands.
+The **orchestrator** defines workflow structure and task dependencies, the **execution engine** runs tasks on available compute resources, and the **resource scheduler** manages and allocates compute resources (CPU, GPU, memory, storage) to meet workflow demands.
 
 ![Layered responsibilities of orchestrators, execution engines, and resource schedulers]({{ "/assets/images/intro/orch-exec-sch.png" | relative_url }})
 
