@@ -5,10 +5,6 @@ nav_order: 3
 has_children: true
 ---
 
-Which tool is the right one for me?
+# Introduction
 
-{: .warning :}
-Warning
-
-{: .note :}
-Note
+The following sections introduce core workflow concepts. A quick grasp of these topics will help you choose the right orchestration tool and design reliable, scalable pipelines.
