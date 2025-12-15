@@ -1,10 +1,10 @@
 # Workflow Basics
 
-Learn how to link data engineering and data analytics tasks into scalable, reliable pipelines using modern workflow orchestration tools.
+Learn about linking data engineering and data analytics tasks into scalable and reliable pipelines.
 
 ## What's a Workflow?
 
-A workflow is a sequence of tasks executed in order with dependencies to accomplish a larger goal. We focus on **workflow orchestration tools** for data engineering and analytics that automate, schedule, and manage data processing pipelines—from simple ETL to complex ML tasks.
+A workflow is a sequence of tasks executed in order with dependencies to accomplish a larger goal. These tutorials focus on **workflow orchestration tools** for data engineering and analytics that automate, schedule, and manage data processing pipelines—from simple ETL to complex machine learning tasks.
 
 **We distinguish:**
 - Workflows related to your Office Productivity tools (not covered here)
@@ -22,19 +22,25 @@ cd workflow-basics
 ## Contents
 
 - [**Introduction**](/docs/intro/)
-  - Orchestration, Monitoring, Deployment, Persistence, Resilience, Reproducibility, Tool Choices
+    - Orchestration
+    - Choosing a tool
+    - Monitoring
+    - Deployment
+    - Persistence
+    - Resilience
+    - Reproducibility
 - [**Quickstart**](/docs/quickstart/)
-  - [Airflow](/docs/quickstart/airflow/)
-  - [Nextflow](/docs/quickstart/nextflow/)
-  - [Prefect](/docs/quickstart/prefect/)
-  - [Snakemake](/docs/quickstart/snakemake/)
-  - [Dagster](/docs/quickstart/dagster/)
-  - [Targets (R)](/docs/quickstart/targets/)
+    - Airflow
+    - Nextflow
+    - Snakemake
+    - Prefect
+    - Dagster
+    - Targets
 - [**Examples**](/docs/examples/)
-  - [Airflow Examples](/examples/airflow/)
-  - [Nextflow Examples](/examples/nextflow/)
-  - [Prefect Examples](/examples/prefect/)
-  - [Targets Examples](/examples/targets/)
+    - Airflow Examples
+    - Nextflow Examples
+    - Prefect Examples
+    - Targets Examples
 
 ## Contributing
 

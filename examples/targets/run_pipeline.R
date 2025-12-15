@@ -9,9 +9,9 @@ args <- commandArgs(trailingOnly = TRUE)
 # Load targets library
 library(targets)
 
-# Check if _targets.R exists
-if (!file.exists("_targets.R")) {
-  stop("Error: _targets.R file not found in current directory")
+# Check if my_targets.R exists
+if (!file.exists("my_targets.R")) {
+  stop("Error: my_targets.R file not found in current directory")
 }
 
 # Load the pipeline

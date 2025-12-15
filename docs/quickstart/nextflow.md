@@ -122,6 +122,12 @@ Processes are defined with:
 
 ### A simple Workflow
 
+Assuming that you're in the top level directory of the cloned GitHub repo, change to the examples folder with this command:
+
+```bash
+cd examples/nextflow
+```
+
 Here's a basic Nextflow workflow that processes data:
 
 ```nextflow

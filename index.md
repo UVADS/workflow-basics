@@ -10,7 +10,7 @@ last_modified_date: "2025-12-14 09:13AM"
 # Workflow Basics
 {: .fs-9 }
 
-Workflow Basics. Learn about linking data engineering and data analytics tasks into scalable and reliable pipelines.
+Learn about linking data engineering and data analytics tasks into scalable and reliable pipelines.
 {: .fs-6 .fw-300 }
 
 [Introduction]({{ "/docs/intro/" | relative_url }}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
@@ -34,25 +34,25 @@ A workflow is a sequence of tasks executed in order with dependencies to accompl
 ## Contents
 
 - [**Introduction**]({{ "/docs/intro/" | relative_url }})
-    - Which tool is the right one for me?
     - Orchestration
+    - Choosing a tool
     - Monitoring
     - Deployment
     - Persistence
     - Resilience
     - Reproducibility
 - [**Quickstart**]({{ "/docs/quickstart/" | relative_url }})
-    - [Airflow]({{ "/docs/quickstart/airflow/" | relative_url }})
-    - [Nextflow]({{ "/docs/quickstart/nextflow/" | relative_url }})
-    - [Prefect]({{ "/docs/quickstart/prefect/" | relative_url }})
-    - [Snakemake]({{ "/docs/quickstart/snakemake/" | relative_url }})
-    - [Dagster]({{ "/docs/quickstart/dagster/" | relative_url }})
-    - [Targets]({{ "/docs/quickstart/targets/" | relative_url }})
+    - Airflow
+    - Nextflow
+    - Snakemake
+    - Prefect
+    - Dagster
+    - Targets
 - [**Examples**]({{ "/docs/examples/" | relative_url }})
-    - [Airflow Examples]({{ "/examples/airflow/" | relative_url }})
-    - [Nextflow Examples]({{ "/examples/nextflow/" | relative_url }})
-    - [Prefect Examples]({{ "/examples/prefect/" | relative_url }})
-    - [Targets Examples]({{ "/examples/targets/" | relative_url }})
+    - Airflow Examples
+    - Nextflow Examples
+    - Prefect Examples
+    - Targets Examples
 
 ## Contributing
 

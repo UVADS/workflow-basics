@@ -142,6 +142,12 @@ For example, if task B requires the output of task A, Prefect ensures task A com
 
 ### A simple Workflow
 
+Assuming that you're in the top level directory of the cloned GitHub repo, change to the examples folder with this command:
+
+```bash
+cd examples/prefect
+```
+
 Here's a basic Prefect workflow that processes data:
 
 ```python

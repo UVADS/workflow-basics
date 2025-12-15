@@ -58,8 +58,8 @@ dag = DAG(
     'simple_data_pipeline',
     default_args=default_args,
     description='A simple ETL pipeline',
-    schedule_interval=timedelta(days=1),  # Run daily
-    start_date=datetime(2024, 1, 1),
+    start_date=datetime(2025, 12, 15),
+    schedule='@once',
     catchup=False,  # Don't backfill past runs
     tags=['example', 'etl', 'beginner'],
 )

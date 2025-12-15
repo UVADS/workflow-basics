@@ -5,6 +5,9 @@ parent: Quickstart
 nav_order: 1
 ---
 # Airflow
+
+## UNDER CONSTRUCTON: MOVING FROM AIRFLOW 2 -> 3
+
 {: .no_toc }
 
 <details open markdown="block">
@@ -52,51 +55,29 @@ Or install with specific providers:
 pip install apache-airflow[postgres,slack]
 ```
 
-For a minimal and constraint installation:
+Airflow uses constraint files to enable reproducible installation, so using pip and constraint files is recommended. 
 
-Using constraint files ensures a repeatable and stable installation with a set of dependencies known to work together. The critical parameters are matching Airflow and Python versions.
-
-```bash
-export AIRFLOW_VERSION=3.1.5 
-export PYTHON_VERSION=3.14
-pip install apache-airflow==${AIRFLOW_VERSION} --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
-```
-
-### Initialization
-
-Initialize the Airflow database:
 
 ```bash
-airflow db init
+# Install Airflow using the constraints file
+AIRFLOW_VERSION=3.1.3
+PYTHON_VERSION="$(python --version | cut -d " " -f 2 | cut -d "." -f 1-2)"
+# For example: 3.7
+CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
+# For example: https://raw.githubusercontent.com/apache/airflow/constraints-2.5.2/constraints-3.7.txt
+pip install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
 ```
 
-Create an admin user:
+{: .note }
+Newer Python versions are not supported by constraint files yet. Stay with Python 3.11 to use constraint files.
+
+### Initialization and startup
+
+The Standalone command will initialize the database, make a user, and start all components for you.
 
 ```bash
-airflow users create \
-    --username admin \
-    --firstname Admin \
-    --lastname User \
-    --role Admin \
-    --email admin@example.com \
-    --password admin
+airflow standalone
 ```
-
-### Starting Airflow
-
-Start the Airflow webserver:
-
-```bash
-airflow webserver --port 8080
-```
-
-In a separate terminal, start the scheduler:
-
-```bash
-airflow scheduler
-```
-
-Access the Airflow UI at `http://localhost:8080` (default username: `admin`, password: `admin`).
 
 ### Configuration
 
@@ -125,10 +106,17 @@ In Airflow, workflows are defined as **DAGs** (Directed Acyclic Graphs). A DAG i
 - **Task**: An individual unit of work (e.g., running a Python function, executing a SQL query)
 - **Operator**: A template for a task (e.g., `PythonOperator`, `BashOperator`, `PostgresOperator`)
 - **Dependencies**: Relationships between tasks defined using `>>` (right shift) or `set_downstream()` / `set_upstream()`
+- **Assets**: Assets are groupings of data. An asset could be a csv file in a AWS S3 storage bucket.
 
 Tasks are connected to form a DAG using dependency operators. For example, `task_a >> task_b` means task_b depends on task_a completing successfully.
 
 ### A simple Workflow
+
+Assuming that you're in the top level directory of the cloned GitHub repo, change to the examples folder with this command:
+
+```bash
+cd examples/airflow
+```
 
 Here's a basic Airflow DAG that processes data:
 
@@ -174,10 +162,10 @@ dag = DAG(
     'simple_data_pipeline',
     default_args=default_args,
     description='A simple ETL pipeline',
-    schedule_interval=timedelta(days=1),
-    start_date=datetime(2024, 1, 1),
-    catchup=False,
-    tags=['example', 'etl'],
+    start_date=datetime(2025, 12, 15),
+    schedule='@once',
+    catchup=False,  # Don't backfill past runs
+    tags=['example', 'etl', 'beginner'],
 )
 
 # Define tasks
@@ -204,6 +192,33 @@ extract_task >> transform_task >> load_task
 ```
 
 Save this file as `simple_data_pipeline.py` in your `~/airflow/dags/` directory. The DAG will appear in the Airflow UI within a few minutes.
+
+```bash
+cp simple_data_pipeline.py ~/airflow/dags 
+```
+
+
+**See list of DAGs**
+
+```bash
+airflow dags list
+```
+
+**Submitting from the command line interface**
+
+You can trigger and backfill execution of any DAG through the Airflow UI.
+
+To execute a single run test:
+
+```bash
+airflow dags test simple_data_pipeline
+```
+
+From the command line you can backfill with:
+
+```bash
+airflow backfill create --dag-id simple_data_pipeline --from-date 2025-12-15 --to-date 2025-12-16
+```
 
 **Key points:**
 - Tasks are defined using operators (e.g., `PythonOperator`)

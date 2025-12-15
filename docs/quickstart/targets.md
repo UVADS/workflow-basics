@@ -85,7 +85,7 @@ Targets workflows are built around the concept of **targets** - named objects th
 **Key Concepts:**
 
 - **Target**: A named object that represents a step in the pipeline (e.g., a data file, a processed dataset, a plot)
-- **Target script**: An R script (`_targets.R`) that defines all targets and their dependencies
+- **Target script**: An R script (`my_targets.R`) that defines all targets and their dependencies
 - **Dependency graph**: Targets automatically builds a dependency graph to determine execution order
 - **Storage**: Targets stores results in a `_targets/` directory for caching and reproducibility
 
@@ -97,9 +97,15 @@ Targets automatically:
 
 ### A simple Workflow
 
+Assuming that you're in the top level directory of the cloned GitHub repo, change to the examples folder with this command:
+
+```bash
+cd examples/targets
+```
+
 Here's a basic Targets pipeline that processes data:
 
-Create a file named `_targets.R`:
+Create a file named `my_targets.R`:
 
 ```r
 library(targets)
