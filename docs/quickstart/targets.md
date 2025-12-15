@@ -85,7 +85,7 @@ Targets workflows are built around the concept of **targets** - named objects th
 **Key Concepts:**
 
 - **Target**: A named object that represents a step in the pipeline (e.g., a data file, a processed dataset, a plot)
-- **Target script**: An R script (`my_targets.R`) that defines all targets and their dependencies
+- **Target script**: An R script (`_targets.R`) that defines all targets and their dependencies
 - **Dependency graph**: Targets automatically builds a dependency graph to determine execution order
 - **Storage**: Targets stores results in a `_targets/` directory for caching and reproducibility
 
@@ -105,7 +105,7 @@ cd examples/targets
 
 Here's a basic Targets pipeline that processes data:
 
-Create a file named `my_targets.R`:
+Create a file named `_targets.R`:
 
 ```r
 library(targets)
@@ -179,6 +179,30 @@ tar_visnetwork()
 tar_read(processed_data)
 ```
 
+**Executing the pipeline script:**
+
+You can run the pipeline using the provided `run_pipeline.R` script from the command line:
+
+```bash
+# Run all targets
+Rscript run_pipeline.R
+
+# Run a specific target
+Rscript run_pipeline.R processed_data
+```
+
+Alternatively, you can execute the pipeline directly in R or RStudio by sourcing the script or running `tar_make()` after loading the `targets` library.
+
+**Data storage and caching:**
+
+Targets stores all computed results, metadata, and dependency information in a `_targets/` directory at the root of your project (the same directory where your `_targets.R` file is located). This directory contains:
+
+- **Computed target values**: Cached results of each target for fast retrieval
+- **Metadata**: Information about when each target was built, its dependencies, and execution status
+- **Dependency graph**: Internal representation of the pipeline structure
+
+When you run `tar_make()`, Targets checks this cache to determine which targets need to be rebuilt (only those that have changed inputs or dependencies). This makes subsequent runs much faster and ensures reproducibility. The `_targets/` directory should typically be added to `.gitignore` since it contains generated files.
+
 **Key points:**
 - Targets are defined using `tar_target()`
 - Dependencies are automatically inferred from code
@@ -188,7 +212,7 @@ tar_read(processed_data)
 
 ### Creating a Pipeline
 
-1. Create a `_targets.R` file in your project directory
+1. Create a `_targets.R` file in your project directory (note: the filename must be exactly `_targets.R` - this is a Targets convention)
 2. Define targets using `tar_target()`
 3. Run `tar_make()` to execute the pipeline
 4. Use `tar_read()` to access results

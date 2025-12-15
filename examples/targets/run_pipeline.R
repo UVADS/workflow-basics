@@ -9,9 +9,9 @@ args <- commandArgs(trailingOnly = TRUE)
 # Load targets library
 library(targets)
 
-# Check if my_targets.R exists
-if (!file.exists("my_targets.R")) {
-  stop("Error: my_targets.R file not found in current directory")
+# Check if _targets.R exists
+if (!file.exists("_targets.R")) {
+  stop("Error: _targets.R file not found in current directory")
 }
 
 # Load the pipeline
@@ -29,15 +29,29 @@ if (length(args) > 0) {
   tar_make()
 }
 
-# Check for errors
-if (length(tar_meta(fields = error)$error) > 0) {
-  cat("\nWARNING: Some targets had errors. Check tar_meta() for details.\n")
-  print(tar_meta(fields = error))
-} else {
-  cat("\nPipeline completed successfully!\n")
-}
+# Check for errors (safely)
+tryCatch({
+  meta <- tar_meta(fields = "error")
+  if (!is.null(meta) && nrow(meta) > 0 && any(!is.na(meta$error))) {
+    cat("\nWARNING: Some targets had errors. Check tar_meta() for details.\n")
+    print(meta[!is.na(meta$error), ])
+  } else {
+    cat("\nPipeline completed successfully!\n")
+  }
+}, error = function(e) {
+  cat("\nPipeline execution completed. Check tar_meta() manually for details.\n")
+})
 
-# Display pipeline status
-cat("\nPipeline status:\n")
-print(tar_progress())
+# Display pipeline status (safely)
+tryCatch({
+  cat("\nPipeline status:\n")
+  progress <- tar_progress()
+  if (!is.null(progress) && nrow(progress) > 0) {
+    print(progress)
+  } else {
+    cat("No progress information available.\n")
+  }
+}, error = function(e) {
+  cat("\nCould not retrieve pipeline progress.\n")
+})
 

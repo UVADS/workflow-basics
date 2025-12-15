@@ -224,7 +224,8 @@ airflow backfill create --dag-id simple_data_pipeline --from-date 2025-12-15 --t
 - Tasks are defined using operators (e.g., `PythonOperator`)
 - Dependencies are set using `>>` operator: `extract_task >> transform_task >> load_task`
 - Data is passed between tasks using XCom (Airflow's cross-communication mechanism)
-- The DAG has scheduling information (`schedule_interval`, `start_date`)
+- The DAG has scheduling information (`schedule`, `start_date`)
+- Data is managed in groups as assets.
 
 ## All Example Scripts
 

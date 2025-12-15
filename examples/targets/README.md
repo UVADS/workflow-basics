@@ -11,7 +11,7 @@ This directory contains example Targets pipelines and helper scripts for R-based
 
 ## Files
 
-- `my_targets.R` - Main pipeline definition file (required for all Targets pipelines)
+- `_targets.R` - Main pipeline definition file (required for all Targets pipelines)
 - `run_pipeline.R` - Script to run the pipeline from command line
 - `inspect_pipeline.R` - Script to inspect pipeline status and dependencies
 - `README.md` - This file
@@ -40,7 +40,7 @@ This directory contains example Targets pipelines and helper scripts for R-based
 
 ### Basic Usage
 
-1. Copy `my_targets.R` to your project directory (or work in this directory)
+1. Copy `_targets.R` to your project directory (or work in this directory)
 
 2. Run the pipeline in R:
    ```r
@@ -79,7 +79,7 @@ Rscript inspect_pipeline.R
 
 ### Pipeline Structure
 
-The `my_targets.R` file defines a pipeline with five targets:
+The `_targets.R` file defines a pipeline with five targets:
 
 1. **raw_data** - Generates or loads raw data
 2. **processed_data** - Transforms the raw data
@@ -148,7 +148,7 @@ The pipeline is configured with `error = "continue"` to continue execution even 
 
 ### Adding New Targets
 
-Add targets to the `list()` in `my_targets.R`:
+Add targets to the `list()` in `_targets.R`:
 
 ```r
 tar_target(
@@ -191,7 +191,7 @@ tar_option_set(
 
 1. **Package not found**: Ensure all required packages are installed and listed in `tar_option_set(packages = ...)`
 
-2. **Target not found**: Check that the target name is spelled correctly and exists in `my_targets.R`
+2. **Target not found**: Check that the target name is spelled correctly and exists in `_targets.R`
 
 3. **Dependency errors**: Use `tar_visnetwork()` to visualize dependencies and identify issues
 
