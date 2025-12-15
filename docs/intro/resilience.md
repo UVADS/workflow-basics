@@ -18,6 +18,8 @@ nav_order: 60
 
 Resilience refers to a workflow's ability to handle failures gracefully and recover automatically. Robust workflows anticipate and manage errors, timeouts, and unexpected conditions without requiring manual intervention.
 
+![Conditional handling of task states and exceptions allows for workflow control]({{ "/assets/images/intro/resilience.png" | relative_url }})
+
 ## Exception Handling
 
 Exception handling manages errors that occur during task execution. Workflows should catch and handle expected errors (e.g., missing data files, API rate limits) while allowing unexpected errors to propagate for debugging. Good exception handling includes logging error context, implementing fallback strategies where appropriate, and ensuring partial failures don't corrupt the entire workflow's state.
