@@ -1,3 +1,10 @@
+---
+layout: default
+title: Targets Examples
+parent: Examples
+nav_order: 4
+---
+
 # Targets Examples
 
 This directory contains example Targets pipelines and helper scripts for R-based data workflows.
@@ -198,8 +205,5 @@ tar_option_set(
 
 ## Additional Resources
 
-- [Targets Documentation](https://docs.ropensci.org/targets/)
-- [Targets Manual](https://books.ropensci.org/targets/)
-- [Targets Tutorial](https://docs.ropensci.org/targets/articles/walkthrough.html)
-- [Targets Examples](https://github.com/ropensci/targets/tree/main/examples)
+For comprehensive documentation, tutorials, and additional resources, see the [Targets documentation page]({{ "/docs/quickstart/targets/" | relative_url }}).
 

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Nextflow Examples
+parent: Examples
+nav_order: 2
+---
+
 # Nextflow Examples
 
 This directory contains example Nextflow workflows and configuration files.
@@ -202,8 +209,5 @@ nextflow run simple_pipeline.nf -w /path/to/work
 
 ## Additional Resources
 
-- [Nextflow Documentation](https://www.nextflow.io/docs/latest/)
-- [Nextflow Tutorials](https://www.nextflow.io/docs/latest/getstarted.html)
-- [nf-core Workflows](https://nf-co.re/) - Community-curated workflows
-- [Nextflow Patterns](https://www.nextflow.io/docs/latest/pattern.html)
+For comprehensive documentation, tutorials, and additional resources, see the [Nextflow documentation page]({{ "/docs/quickstart/nextflow/" | relative_url }}).
 

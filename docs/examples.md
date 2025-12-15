@@ -7,6 +7,6 @@ has_children: true
 
 # Examples
 
-## Prefect
+All example scripts of this tutorial are available in the [UVADS GitHub Repo - Workflow Basics](https://github.com/UVADS/workflow-basics/tree/main/examples)
 
-- [Realworld Examples: Prefect Documentation](https://docs.prefect.io/v3/how-to-guides/workflows/run-work-concurrently#real-world-applications)
+Follow the table of contents below to find examples for a particular tool.

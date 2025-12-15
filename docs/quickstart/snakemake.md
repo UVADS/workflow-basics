@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Snakemake
-parent: Tools
+parent: Quickstart
 nav_order: 3
 ---
 

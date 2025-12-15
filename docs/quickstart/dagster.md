@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Dagster
-parent: Tools
+parent: Quickstart
 nav_order: 5
 ---
 

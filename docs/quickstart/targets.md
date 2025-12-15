@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Targets
-parent: Tools
+parent: Quickstart
 nav_order: 6
 ---
 # Targets

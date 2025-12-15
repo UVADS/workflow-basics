@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Prefect
-parent: Tools
+parent: Quickstart
 nav_order: 4
 ---
 # Prefect
@@ -130,11 +130,13 @@ prefect cloud workspace set --workspace <your-workspace-name>
 
 Prefect workflows are built from two fundamental building blocks: **tasks** and **flows**.
 
-**Tasks** are the individual units of work in a Prefect workflow. They represent discrete operations that perform a specific function, such as extracting data, transforming it, or loading it into a database. Tasks are created by applying the `@task` decorator to a Python function. When you call a task function within a flow, Prefect tracks its execution, manages its state, and provides observability features like logging and retries.
+**Tasks** are the individual units of work in a Prefect workflow. They represent discrete operations, such as extracting data, transforming it, or loading it into a database. Tasks are created by applying the `@task` decorator to a Python function. When you call a task function within a flow, Prefect tracks its execution, manages its state, and provides observability features like logging and retries.
 
-**Flows** are the containers that orchestrate tasks and define the workflow's structure. A flow is created by applying the `@flow` decorator to a Python function. Flows coordinate task execution, manage dependencies between tasks, and provide the overall workflow context.
+**Flows** combine a group of tasks into a structured pipeline. A flow is created by applying the @flow decorator to a Python function. Flows coordinate task execution, manage dependencies between tasks, and provide the overall workflow context.
 
 Tasks and flows are chained together through function calls. When you call a task function inside a flow function, Prefect automatically creates a dependency relationship. The output of one task becomes the input to the next, creating a directed acyclic graph (DAG) of task dependencies. Prefect uses these dependencies to determine execution order: tasks that don't depend on each other can run concurrently, while dependent tasks execute sequentially.
+
+Prefect uses these dependencies to determine execution order: tasks that don't depend on each other can run concurrently, while dependent tasks execute sequentially.
 
 For example, if task B requires the output of task A, Prefect ensures task A completes before task B begins. This dependency chaining happens naturally through Python function calls—no special syntax is needed beyond the `@task` and `@flow` decorators.
 
@@ -455,6 +457,8 @@ if __name__ == "__main__":
 ### All Example Scripts
 
 You can find the example scripts and notebooks in the [examples folder](/examples/prefect) in the Git repository.
+
+In addition, take a look at the examples in the [Additional Resources](#additional-resources)
 
 ## Advanced Topics
 

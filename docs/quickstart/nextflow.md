@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Nextflow
-parent: Tools
+parent: Quickstart
 nav_order: 2
 ---
 # Nextflow

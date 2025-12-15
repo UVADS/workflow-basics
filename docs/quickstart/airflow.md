@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Airflow
-parent: Tools
+parent: Quickstart
 nav_order: 1
 ---
 # Airflow
@@ -52,10 +52,14 @@ Or install with specific providers:
 pip install apache-airflow[postgres,slack]
 ```
 
-For a minimal installation:
+For a minimal and constraint installation:
+
+Using constraint files ensures a repeatable and stable installation with a set of dependencies known to work together. The critical parameters are matching Airflow and Python versions.
 
 ```bash
-pip install apache-airflow==2.8.0 --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.8.0/constraints-3.10.txt"
+export AIRFLOW_VERSION=3.1.5 
+export PYTHON_VERSION=3.14
+pip install apache-airflow==${AIRFLOW_VERSION} --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
 ```
 
 ### Initialization

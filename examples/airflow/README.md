@@ -1,3 +1,10 @@
+---
+layout: default
+title: Airflow Examples
+parent: Examples
+nav_order: 1
+---
+
 # Airflow Examples
 
 This directory contains example Airflow DAGs and helper scripts.
@@ -69,6 +76,5 @@ chmod +x run_dag.sh
 
 ## Additional Resources
 
-- [Airflow Documentation](https://airflow.apache.org/docs/)
-- [Airflow Tutorial](https://airflow.apache.org/docs/apache-airflow/stable/tutorial/index.html)
+For comprehensive documentation, tutorials, and additional resources, see the [Airflow documentation page]({{ "/docs/quickstart/airflow/" | relative_url }}).
 

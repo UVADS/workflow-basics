@@ -1,3 +1,10 @@
+---
+layout: default
+title: Prefect Examples
+parent: Examples
+nav_order: 3
+---
+
 # Prefect Examples
 
 This directory contains example Prefect workflows demonstrating various features and patterns.
@@ -124,7 +131,5 @@ For cloud-based monitoring:
 
 ## Additional Resources
 
-- [Prefect Documentation](https://docs.prefect.io/)
-- [Prefect Tutorials](https://docs.prefect.io/tutorials/)
-- [Prefect Examples](https://github.com/PrefectHQ/prefect/tree/main/examples)
+For comprehensive documentation, tutorials, and additional resources, see the [Prefect documentation page]({{ "/docs/quickstart/prefect/" | relative_url }}).
 
