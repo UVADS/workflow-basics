@@ -25,10 +25,12 @@ This directory contains example Targets pipelines and helper scripts for R-based
 
 2. Install optional dependencies:
    ```r
-   install.packages(c("dplyr", "readr", "tarchetypes"))
+   install.packages(c("dplyr", "readr", "tarchetypes", "visNetwork"))
    # Optional: for plotting
    install.packages("ggplot2")
    ```
+   
+   **Note:** `visNetwork` is required for `tar_visnetwork()` to visualize the dependency graph.
 
 3. Verify installation:
    ```r

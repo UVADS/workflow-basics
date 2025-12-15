@@ -66,6 +66,19 @@ library(targets)
 packageVersion("targets")
 ```
 
+### Additional Packages for Examples
+
+The example scripts in this repository require additional packages:
+
+```r
+install.packages(c("tarchetypes", "visNetwork"))
+```
+
+- **`tarchetypes`**: Provides additional target types and utilities used in the examples
+- **`visNetwork`**: Required for `tar_visnetwork()` to visualize the dependency graph
+
+**Note:** These packages are required to run the examples in the `examples/targets/` directory. If you're creating your own pipeline from scratch, you may not need them unless you use specific features (e.g., `tar_visnetwork()` for visualization).
+
 ### Requirements
 
 Targets requires:
@@ -172,7 +185,7 @@ library(targets)
 # Load the pipeline
 tar_make()
 
-# View the pipeline
+# View the pipeline (opens interactive HTML graph in browser/viewer)
 tar_visnetwork()
 
 # Read a target
@@ -193,6 +206,36 @@ Rscript run_pipeline.R processed_data
 
 Alternatively, you can execute the pipeline directly in R or RStudio by sourcing the script or running `tar_make()` after loading the `targets` library.
 
+**Expected output**
+
+```r
+Running all targets...
++ raw_data dispatched
+No data file found. Generating sample data...
+✔ raw_data completed [109ms, 380 B]
++ processed_data dispatched
+✔ processed_data completed [14ms, 652 B]
++ data_plot dispatched
+✔ data_plot completed [1.2s, 46.44 kB]
++ summary_stats dispatched
+✔ summary_stats completed [1ms, 210 B]
++ save_results dispatched
+✔ save_results completed [321ms, 1.29 kB]
+✔ ended pipeline [2s, 5 completed, 0 skipped]
+
+Pipeline completed successfully!
+
+Pipeline status:
+# A tibble: 5 × 2
+  name           progress 
+  <chr>          <chr>    
+1 raw_data       completed
+2 processed_data completed
+3 data_plot      completed
+4 summary_stats  completed
+5 save_results   completed
+```
+
 **Data storage and caching:**
 
 Targets stores all computed results, metadata, and dependency information in a `_targets/` directory at the root of your project (the same directory where your `_targets.R` file is located). This directory contains:
@@ -208,7 +251,7 @@ When you run `tar_make()`, Targets checks this cache to determine which targets 
 - Dependencies are automatically inferred from code
 - Use `tar_make()` to run the pipeline
 - Use `tar_read()` to access target results
-- Use `tar_visnetwork()` to visualize the dependency graph
+- Use `tar_visnetwork()` to visualize the dependency graph (opens interactive HTML in browser/viewer)
 
 ### Creating a Pipeline
 
@@ -220,8 +263,21 @@ When you run `tar_make()`, Targets checks this cache to determine which targets 
 ### Inspecting the Pipeline
 
 ```r
-# View dependency graph
+# View dependency graph (interactive HTML visualization)
 tar_visnetwork()
+# This opens an interactive graph in your browser or RStudio viewer
+# You can zoom, pan, and click on nodes to see details
+
+# Export the graph as a static image (optional)
+# First install: install.packages(c("htmlwidgets", "webshot2"))
+library(htmlwidgets)
+library(webshot2)
+vis <- tar_visnetwork()
+htmlwidgets::saveWidget(vis, "pipeline_graph.html")
+webshot2::webshot("pipeline_graph.html", "pipeline_graph.png")
+
+# Alternative: Simple text-based diagram
+tar_man()
 
 # List all targets
 tar_manifest()
