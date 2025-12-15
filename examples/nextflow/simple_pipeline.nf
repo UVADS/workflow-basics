@@ -28,7 +28,7 @@ workflow {
 
 // Process 1: Extract data
 process extract {
-    label 'extract'
+    label "extract"
     
     input:
     path input_file
@@ -47,7 +47,7 @@ process extract {
 
 // Process 2: Transform data
 process transform {
-    label 'transform'
+    label "transform"
     
     input:
     path input_file
@@ -59,14 +59,14 @@ process transform {
     """
     echo "Transforming data"
     # Simple transformation: multiply each number by 2
-    awk '{if (\$1 ~ /^[0-9]+$/) print \$1 * 2; else print \$1}' ${input_file} > transformed.txt
+    awk "{if (\$1 ~ /^[0-9]+$/) print \$1 * 2; else print \$1}" ${input_file} > transformed.txt
     echo "Transformation complete"
     """
 }
 
 // Process 3: Load data
 process load {
-    label 'load'
+    label "load"
     
     input:
     path input_file

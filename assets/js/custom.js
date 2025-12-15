@@ -23,10 +23,19 @@
     const codeBlocks = document.querySelectorAll('div.highlighter-rouge, figure.highlight, div.listingblock > div.content');
     
     codeBlocks.forEach(function(block) {
-      // Skip if button already exists
+      // Skip if our button already exists
       if (block.querySelector('button.copy-code-button')) {
         return;
       }
+
+      // Remove any existing default buttons (but keep toggle buttons)
+      const existingButtons = block.querySelectorAll('button:not(.code-toggle-button)');
+      existingButtons.forEach(function(btn) {
+        // Only remove if it's not our custom button
+        if (!btn.classList.contains('copy-code-button')) {
+          btn.remove();
+        }
+      });
 
       // Find the code element
       const codeElement = block.querySelector('code') || block.querySelector('pre');
@@ -49,10 +58,11 @@
       button.setAttribute('aria-label', 'Copy code to clipboard');
       button.setAttribute('title', 'Copy code');
       button.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+        <svg class="copy-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
           <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
           <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
         </svg>
+        <span class="copy-text">Copy</span>
       `;
 
       // Copy to clipboard handler
@@ -106,18 +116,44 @@
 
   // Show copied feedback
   function showCopiedFeedback(button) {
-    const originalHTML = button.innerHTML;
-    button.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-        <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
-        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
-      </svg>
-    `;
+    const copyIcon = button.querySelector('.copy-icon');
+    const copyText = button.querySelector('.copy-text');
+    
+    // Store original state
+    if (!button.dataset.originalIcon) {
+      button.dataset.originalIcon = copyIcon ? copyIcon.outerHTML : '';
+    }
+    if (!button.dataset.originalText) {
+      button.dataset.originalText = copyText ? copyText.textContent : '';
+    }
+    
+    // Update to show checkmark icon and "Copied" text
+    if (copyIcon) {
+      copyIcon.outerHTML = `
+        <svg class="copy-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+          <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+        </svg>
+      `;
+    }
+    if (copyText) {
+      copyText.textContent = 'Copied';
+    }
     button.setAttribute('title', 'Copied!');
+    button.classList.add('copied-state');
     
     setTimeout(function() {
-      button.innerHTML = originalHTML;
+      // Restore original icon and text
+      const currentIcon = button.querySelector('.copy-icon');
+      const currentText = button.querySelector('.copy-text');
+      if (currentIcon && button.dataset.originalIcon) {
+        currentIcon.outerHTML = button.dataset.originalIcon;
+      }
+      if (currentText && button.dataset.originalText) {
+        currentText.textContent = button.dataset.originalText;
+      }
       button.setAttribute('title', 'Copy code');
+      button.classList.remove('copied-state');
     }, 2000);
   }
 
@@ -201,13 +237,9 @@
         }
       });
 
-      // Insert toggle button after copy button or at the beginning
-      const copyButton = block.querySelector('.copy-code-button');
-      if (copyButton) {
-        copyButton.insertAdjacentElement('afterend', toggleButton);
-      } else {
-        block.insertBefore(toggleButton, block.firstChild);
-      }
+      // Insert toggle button at the end of the block (bottom right)
+      // Don't insert after copy button to avoid positioning issues
+      block.appendChild(toggleButton);
     });
   }
 })();

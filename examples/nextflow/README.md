@@ -100,7 +100,7 @@ The `simple_pipeline.nf` workflow consists of three processes:
 ### Process Chaining
 
 Processes are connected using channels:
-```nextflow
+```java
 extract(input_ch)
 transform(extract.out.extracted)
 load(transform.out.transformed)
@@ -155,12 +155,12 @@ Nextflow provides real-time execution monitoring:
 
 Add custom profiles to `nextflow.config`:
 
-```nextflow
+```java
 profiles {
     myprofile {
-        process.executor = 'local'
+        process.executor = "local"
         process.cpus = 8
-        process.memory = '32 GB'
+        process.memory = "32 GB"
     }
 }
 ```

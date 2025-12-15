@@ -39,8 +39,11 @@ Key features of Targets include:
 
 ## Setup
 
-### Installation
+**Requirements**
 
+Targets requires:
+- R version 4.0.0 or later
+- Common R packages (available via `targets::tar_option_set()`)
 Install Targets from CRAN:
 
 ```r
@@ -57,7 +60,7 @@ install.packages("remotes")
 remotes::install_github("ropensci/targets")
 ```
 
-### Verify Installation
+**Verify Installation**
 
 Verify that Targets is installed correctly:
 
@@ -66,7 +69,7 @@ library(targets)
 packageVersion("targets")
 ```
 
-### Additional Packages for Examples
+**Additional Packages for Examples**
 
 The example scripts in this repository require additional packages:
 
@@ -77,17 +80,12 @@ install.packages(c("tarchetypes", "visNetwork"))
 - **`tarchetypes`**: Provides additional target types and utilities used in the examples
 - **`visNetwork`**: Required for `tar_visnetwork()` to visualize the dependency graph
 
-**Note:** These packages are required to run the examples in the `examples/targets/` directory. If you're creating your own pipeline from scratch, you may not need them unless you use specific features (e.g., `tar_visnetwork()` for visualization).
-
-### Requirements
-
-Targets requires:
-- R version 4.0.0 or later
-- Common R packages (available via `targets::tar_option_set()`)
+{: .note }
+These packages are required to run the examples in the `examples/targets/` directory. If you're creating your own pipeline from scratch, you may not need them unless you use specific features (e.g., `tar_visnetwork()` for visualization).
 
 **Once Targets is installed, you can:**
 - Create your first pipeline (see "Getting Started" section below)
-- Check out the example scripts in the examples folder
+- Check out the [example scripts](https://github.com/UVADS/workflow-basics/tree/main/examples/targets) in the GitHub repository.
 
 ## Getting Started
 
@@ -102,11 +100,11 @@ Targets workflows are built around the concept of **targets** - named objects th
 - **Dependency graph**: Targets automatically builds a dependency graph to determine execution order
 - **Storage**: Targets stores results in a `_targets/` directory for caching and reproducibility
 
-Targets automatically:
-- Tracks dependencies between targets
-- Skips targets that are up-to-date
-- Runs targets in the correct order
-- Caches results for reproducibility
+Targets automatically
+- Tracks dependencies between targets,
+- Skips targets that are up-to-date,
+- Runs targets in the correct order,
+- Caches results for reproducibility.
 
 ### A simple Workflow
 
@@ -177,7 +175,7 @@ list(
 )
 ```
 
-Run the pipeline:
+**Executing the pipeline:**
 
 ```r
 library(targets)
@@ -192,9 +190,7 @@ tar_visnetwork()
 tar_read(processed_data)
 ```
 
-**Executing the pipeline script:**
-
-You can run the pipeline using the provided `run_pipeline.R` script from the command line:
+For convenience, you can run the pipeline or specific target using the provided `run_pipeline.R` script from the command line:
 
 ```bash
 # Run all targets
@@ -203,8 +199,6 @@ Rscript run_pipeline.R
 # Run a specific target
 Rscript run_pipeline.R processed_data
 ```
-
-Alternatively, you can execute the pipeline directly in R or RStudio by sourcing the script or running `tar_make()` after loading the `targets` library.
 
 **Expected output**
 
@@ -236,6 +230,8 @@ Pipeline status:
 5 save_results   completed
 ```
 
+![View of task dependencies]({{ "/assets/images/targets/targets-dag.png" | relative_url }})
+
 **Data storage and caching:**
 
 Targets stores all computed results, metadata, and dependency information in a `_targets/` directory at the root of your project (the same directory where your `_targets.R` file is located). This directory contains:
@@ -253,22 +249,12 @@ When you run `tar_make()`, Targets checks this cache to determine which targets 
 - Use `tar_read()` to access target results
 - Use `tar_visnetwork()` to visualize the dependency graph (opens interactive HTML in browser/viewer)
 
-### Creating a Pipeline
+### Inspecting and Managing the Pipeline
 
-1. Create a `_targets.R` file in your project directory (note: the filename must be exactly `_targets.R` - this is a Targets convention)
-2. Define targets using `tar_target()`
-3. Run `tar_make()` to execute the pipeline
-4. Use `tar_read()` to access results
-
-### Inspecting the Pipeline
+Beyond the basic commands shown above, Targets provides several useful functions for inspecting and managing your pipeline:
 
 ```r
-# View dependency graph (interactive HTML visualization)
-tar_visnetwork()
-# This opens an interactive graph in your browser or RStudio viewer
-# You can zoom, pan, and click on nodes to see details
-
-# Export the graph as a static image (optional)
+# Export the dependency graph as a static image (optional)
 # First install: install.packages(c("htmlwidgets", "webshot2"))
 library(htmlwidgets)
 library(webshot2)
@@ -289,9 +275,10 @@ tar_outdated()
 tar_meta()
 ```
 
+
 ## All Examples
 
-[/examples/targets]
+[Examples](https://github.com/UVADS/workflow-basics/tree/main/examples/targets)
 
 ## Advanced Topics
 
@@ -389,7 +376,6 @@ tar_meta(fields = error)
 ### Official Documentation
 
 - [Targets Documentation](https://docs.ropensci.org/targets/) - Comprehensive guides, API reference, and tutorials
-- [Targets Manual](https://books.ropensci.org/targets/) - Complete user manual
 - [Targets GitHub Repository](https://github.com/ropensci/targets) - Source code and issues
 
 ### Learning Resources

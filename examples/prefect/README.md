@@ -13,6 +13,8 @@ This directory contains example Prefect workflows demonstrating various features
 
 - `numbers.py` - A basic workflow with sequential task execution
 - `numbers-concurrent.py` - A workflow demonstrating concurrent task execution using `.submit()`
+- `shell-workflow.py` - Basic shell command execution using ShellOperation
+- `shell-advanced.py` - Advanced shell operations with error handling and custom working directories
 - `numbers.ipynb` - Jupyter notebook version of the sequential workflow
 - `numbers-concurrent.ipynb` - Jupyter notebook version of the concurrent workflow
 - `requirements.txt` - Python dependencies for Prefect examples
@@ -82,6 +84,30 @@ This example demonstrates:
 - Parallel execution of independent tasks
 - Using Prefect futures for async task management
 - Flow with `log_prints=True` for better observability
+
+### Shell Command Execution
+
+Run the basic shell workflow:
+```bash
+python shell-workflow.py
+```
+
+This example demonstrates:
+- Executing shell commands using `ShellOperation`
+- Processing files with external tools (e.g., `wc`)
+- Running multiple commands in sequence
+- Using environment variables in shell commands
+
+Run the advanced shell workflow:
+```bash
+python shell-advanced.py
+```
+
+This example demonstrates:
+- Custom working directories
+- Error handling with `continue_on_error`
+- Capturing both stdout and stderr with `return_all`
+- Chaining multiple commands with proper error handling
 
 ## Understanding the Examples
 

@@ -130,7 +130,7 @@ cd examples/nextflow
 
 Here's a basic Nextflow workflow that processes data:
 
-```nextflow
+```java
 #!/usr/bin/env nextflow
 
 // Define workflow parameters
@@ -170,7 +170,7 @@ process transform {
     script:
     """
     echo "Transforming data"
-    awk '{print \$1 * 2}' ${input_file} > transformed.txt
+    awk "{print \$1 * 2}" ${input_file} > transformed.txt
     """
 }
 
@@ -221,7 +221,7 @@ nextflow run simple_pipeline.nf --input data.txt
 
 Channels are fundamental to Nextflow workflows:
 
-```nextflow
+```java
 // Create channels
 ch1 = Channel.from(1, 2, 3, 4, 5)
 ch2 = Channel.fromPath("*.txt")
@@ -235,7 +235,7 @@ ch3.collect()  // Collect all items into a single channel
 
 ## All Example Scripts
 
-[/examples/nextflow]
+[Examples](https://github.com/UVADS/workflow-basics/tree/main/examples/nextflow)
 
 ## Advanced Topics
 
@@ -243,24 +243,24 @@ ch3.collect()  // Collect all items into a single channel
 
 Nextflow supports execution profiles for different environments:
 
-```nextflow
+```java
 profiles {
     local {
-        executor = 'local'
+        executor = "local"
         process.cpus = 4
-        process.memory = '8 GB'
+        process.memory = "8 GB"
     }
     
     slurm {
-        executor = 'slurm'
-        process.queue = 'compute'
+        executor = "slurm"
+        process.queue = "compute"
         process.cpus = 8
-        process.memory = '16 GB'
+        process.memory = "16 GB"
     }
     
     aws {
-        executor = 'awsbatch'
-        process.queue = 'my-queue'
+        executor = "awsbatch"
+        process.queue = "my-queue"
     }
 }
 ```
@@ -274,9 +274,9 @@ nextflow run workflow.nf -profile slurm
 
 Nextflow supports Docker, Apptainer, and Singularity containers:
 
-```nextflow
+```java
 process my_process {
-    container 'biocontainers/fastqc:0.11.9'
+    container "biocontainers/fastqc:0.11.9"
     
     script:
     """
@@ -306,21 +306,21 @@ This will skip successfully completed processes and continue from failures.
 
 Create a `nextflow.config` file in your project:
 
-```nextflow
+```java
 // Global configuration
-workDir = '/path/to/work'
+workDir = "/path/to/work"
 
 // Process defaults
 process {
     cpus = 4
-    memory = '8 GB'
-    time = '1h'
+    memory = "8 GB"
+    time = "1h"
 }
 
 // Executor configuration
 executor {
-    name = 'slurm'
-    queue = 'compute'
+    name = "slurm"
+    queue = "compute"
 }
 
 // Container configuration
@@ -333,9 +333,9 @@ docker {
 
 Handle errors in processes:
 
-```nextflow
+```java
 process my_process {
-    errorStrategy 'retry'
+    errorStrategy "retry"
     maxRetries 3
     
     script:
@@ -349,9 +349,9 @@ process my_process {
 
 Publish output files:
 
-```nextflow
+```java
 process my_process {
-    publishDir "${params.output}", mode: 'copy'
+    publishDir "${params.output}", mode: "copy"
     
     output:
     path "result.txt"

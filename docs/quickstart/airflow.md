@@ -229,7 +229,7 @@ airflow backfill create --dag-id simple_data_pipeline --from-date 2025-12-15 --t
 
 ## All Example Scripts
 
-You can find the example scripts and notebooks in the [examples folder](/examples/airflow/) in the Git repository.
+You can find the example scripts and notebooks in the [examples folder](https://github.com/UVADS/workflow-basics/tree/main/examples/airflow) in the Git repository.
 
 
 ## Advanced Topics

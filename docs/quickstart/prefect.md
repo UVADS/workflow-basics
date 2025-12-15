@@ -63,6 +63,12 @@ Or using conda:
 conda install -c conda-forge prefect
 ```
 
+For executing shell commands, also install the `prefect-shell` package:
+
+```bash
+pip install prefect-shell
+```
+
 Verify that Prefect is installed correctly:
 
 ```bash
@@ -460,9 +466,120 @@ if __name__ == "__main__":
     
 **Note**: Events can trigger automations in Prefect Cloud or be consumed by external systems for monitoring, alerting, or triggering downstream workflows.
 
+### Executing other applications via Shell commands
+
+Prefect can execute shell commands and external applications using `ShellOperation` from the `prefect-shell` package:
+
+```python
+from prefect import flow
+from prefect_shell import ShellOperation
+
+@flow
+def shell_workflow(filename: str = "data.txt"):
+    """A workflow that executes shell commands using ShellOperation."""
+    
+    # Simple command execution
+    echo_task = ShellOperation(
+        commands=["echo 'Hello from Prefect!'"],
+        stream_output=True
+    )
+    echo_result = echo_task()
+    print(f"Echo output: {echo_result}")
+    
+    # Process file with external tool (e.g., count lines)
+    wc_task = ShellOperation(
+        commands=[f"wc -l {filename}"],
+        stream_output=True
+    )
+    wc_result = wc_task()
+    line_count = int(wc_result.split()[0])
+    print(f"File {filename} has {line_count} lines")
+    
+    # Run multiple commands in sequence
+    system_info_task = ShellOperation(
+        commands=[
+            "date",
+            "pwd",
+            "ls -la"
+        ],
+        stream_output=True
+    )
+    system_info = system_info_task()
+    print("System information:")
+    print(system_info)
+    
+    # Execute command with environment variables
+    env_task = ShellOperation(
+        commands=["echo $MY_VAR"],
+        env={"MY_VAR": "Prefect is awesome!"},
+        stream_output=True
+    )
+    env_result = env_task()
+    print(f"Environment variable: {env_result}")
+    
+    return {
+        "echo_output": echo_result,
+        "line_count": line_count,
+        "system_info": system_info,
+        "env_result": env_result
+    }
+
+if __name__ == "__main__":
+    result = shell_workflow("example.txt")
+```
+
+**Advanced usage with working directory and error handling:**
+
+```python
+from prefect import flow
+from prefect_shell import ShellOperation
+
+@flow
+def advanced_shell_workflow():
+    """Advanced shell operations with custom working directory."""
+    
+    # Run command in specific directory
+    build_task = ShellOperation(
+        commands=["make build"],
+        working_dir="/path/to/project",
+        stream_output=True,
+        return_all=True  # Return both stdout and stderr
+    )
+    build_result = build_task()
+    
+    # Chain multiple commands with error handling
+    pipeline_task = ShellOperation(
+        commands=[
+            "python process_data.py",
+            "python validate.py",
+            "python upload.py"
+        ],
+        stream_output=True,
+        continue_on_error=False  # Stop on first error
+    )
+    pipeline_result = pipeline_task()
+    
+    return {
+        "build": build_result,
+        "pipeline": pipeline_result
+    }
+
+if __name__ == "__main__":
+    result = advanced_shell_workflow()
+```
+
+**Key points:**
+- `ShellOperation` is a Prefect task that executes shell commands
+- Use `commands` parameter to specify one or more shell commands
+- Set `stream_output=True` to see command output in logs
+- Use `working_dir` to execute commands in a specific directory
+- Use `env` to set environment variables for the command
+- Set `continue_on_error=False` to stop execution on command failure
+- Prefect automatically tracks execution, handles retries, and manages errors
+
 ### All Example Scripts
 
-You can find the example scripts and notebooks in the [examples folder](/examples/prefect) in the Git repository.
+You can find the example scripts and notebooks in the [examples folder](https://github.com/UVADS/workflow-basics/tree/main/examples/prefect) in the Git repository.
 
 In addition, take a look at the examples in the [Additional Resources](#additional-resources)
 
@@ -473,7 +590,6 @@ In addition, take a look at the examples in the [Additional Resources](#addition
 By default Prefect uses a thread pool to execute tasks and flows. Alternatively, you may choose a process pool which can be advantageous in particular with older Python versions which employ the global interpreter lock on cpu bound tasks. 
 
 In addition, Prefect offers integrations with dask and ray for distributed task execution beyond single nodes. See the [Prefect TaskRunner documentation](https://docs.prefect.io/v3/concepts/task-runners) for details.
-
 
 ### Work pools deployments
 
@@ -488,9 +604,121 @@ Prefect's deployment system addresses this by allowing you to configure work poo
 
 This flexibility enables you to optimize resource usage (and cost) by matching each task to the most appropriate compute environment.
 
+### Exporting Flow Configuration as Declarative Artifacts
+
+Prefect allows you to export flow configurations and parameters in human-readable formats (YAML or JSON) that serve as declarative artifacts. These artifacts capture the complete workflow definition, including task configurations, dependencies, parameters, schedules, and deployment settings, enabling you to rebuild and execute the exact same flow elsewhere.
+
+**Why declarative artifacts matter:**
+
+- **Reproducibility**: Export your flow configuration to recreate the exact workflow in different environments
+- **Version control**: Track workflow changes by versioning the exported configuration files
+- **Portability**: Share workflow definitions with team members or deploy to different systems
+- **Documentation**: Human-readable YAML/JSON files serve as self-documenting workflow specifications
+- **Infrastructure as Code**: Treat workflows as code that can be reviewed, tested, and deployed systematically
+
+**Exporting a deployment configuration:**
+
+When you create a deployment, Prefect generates a declarative configuration that can be exported:
+
+```python
+from prefect import flow
+from prefect.deployments import Deployment
+
+@flow
+def my_workflow(param1: str, param2: int = 10):
+    # Your workflow code
+    pass
+
+# Create a deployment
+deployment = Deployment.build_from_flow(
+    flow=my_workflow,
+    name="my-deployment",
+    description="A sample deployment for data processing workflow",
+    tags=["production", "data-pipeline"],
+    parameters={"param1": "value1", "param2": 20},
+    work_pool_name="my-work-pool"
+)
+
+# Export to YAML
+deployment.to_yaml("deployment.yaml")
+```
+
+The exported `deployment.yaml` file contains:
+
+```yaml
+name: my-deployment
+description: A sample deployment for data processing workflow
+version: null
+tags:
+  - production
+  - data-pipeline
+parameters:
+  param1: value1
+  param2: 20
+work_pool:
+  name: my-work-pool
+  job_variables: {}
+flow_name: my_workflow
+```
+
+**Key fields explained:**
+
+- **`description`**: Human-readable description of the deployment for documentation and organization
+- **`tags`**: List of tags for filtering, organizing, and grouping deployments (e.g., `["production", "data-pipeline"]`)
+- **`version`**: Optional version identifier (arbitrary string like `"1.0.0"` or `"v2024-01-15"`). You can use semantic versioning, timestamps, or Git commit hashes to track deployment versions. This is not automatically generated—you set it manually when creating the deployment
+- **`parameters`**: Default parameter values for the flow that can be overridden at runtime
+- **`job_variables`**: Execution-specific variables passed to the work pool infrastructure (e.g., Kubernetes pod specs, Docker container environment variables, resource limits). These are typically set based on the work pool type and execution environment requirements
+
+**Rebuilding from exported configuration:**
+
+You can recreate a deployment from the exported YAML file:
+
+```python
+from prefect.deployments import Deployment
+
+# Load deployment from YAML
+deployment = Deployment.load_from_yaml("deployment.yaml")
+
+# Apply the deployment
+deployment.apply()
+```
+
+**Exporting flow definitions:**
+
+You can also export flow metadata and structure:
+
+```python
+from prefect import flow
+
+@flow
+def my_workflow(param1: str, param2: int = 10):
+    # Your workflow code
+    pass
+
+# Get flow definition as dictionary
+flow_spec = my_workflow.model_dump()
+
+# Export to JSON for human-readable format
+import json
+with open("flow_definition.json", "w") as f:
+    json.dump(flow_spec, f, indent=2)
+```
+
+**Best practices:**
+
+- **Version your exports**: Include version numbers or timestamps in exported configuration filenames
+- **Store in version control**: Commit exported YAML/JSON files to Git for workflow versioning
+- **Document parameters**: Include parameter descriptions and default values in your flow definitions
+- **Test imports**: Verify that exported configurations can be successfully imported and deployed
+- **Use for CI/CD**: Integrate configuration exports into your deployment pipelines for automated workflow deployment
+
+This declarative approach ensures that your workflows are reproducible, portable, and maintainable across different environments and teams.
+
 ### Automations
 
-https://docs.prefect.io/v3/how-to-guides/automations/creating-automations
+Prefect Automations allow you to create event-driven workflows that respond to flow run states, task completions, and other triggers. Automations can send notifications, trigger other flows, or perform custom actions based on workflow execution events. 
+
+See the [Prefect Automations guide](https://docs.prefect.io/v3/how-to-guides/automations/creating-automations) for details on creating and managing automations.
 
 ## Useful integrations
 

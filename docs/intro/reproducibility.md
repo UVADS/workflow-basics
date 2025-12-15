@@ -9,6 +9,22 @@ nav_order: 70
 
 Reproducibility ensures that workflows produce the same results when run with the same inputs, regardless of when or where they execute. This is critical for scientific computing, data analysis, and production pipelines where consistency and verifiability matter. Reproducible workflows require careful management of code versions, dependencies, execution environments, and data inputs.
 
+## Declarative workflow definitions
+
+Declarative workflow definitions describe **what** should be accomplished rather than **how** to accomplish it step-by-step. This approach is fundamental to reproducibility because:
+
+- **Explicit dependencies**: Declarative definitions make task dependencies explicit and visible, allowing the orchestrator to determine execution order automatically. This eliminates hidden dependencies and execution order ambiguities.
+
+- **Idempotent execution**: Workflows defined declaratively can be safely re-run multiple times. The orchestrator tracks what has already been completed and only executes tasks that need to run, ensuring consistent results.
+
+- **Version control**: Declarative definitions are typically code-based (e.g., Python scripts, YAML files, DSL files) that can be version-controlled, reviewed, and shared. Changes to workflow logic are tracked in version history.
+
+- **Portability**: By separating the "what" (workflow definition) from the "how" (execution environment), declarative workflows can run on different systems (local, cloud, HPC) with the same results, as long as the execution environment is properly configured.
+
+- **Transparency**: Declarative definitions serve as documentation, making it clear what the workflow does, what data it processes, and how tasks relate to each other. This transparency is essential for reproducibility and collaboration.
+
+Most modern workflow orchestration tools (Prefect, Airflow, Nextflow, Snakemake, Targets) use declarative approaches where you define tasks, their dependencies, and data flow, while the orchestrator handles execution scheduling, resource management, and state tracking.
+
 ## Workflow packaging
 
 Workflow packaging captures all necessary components into a distributable format, including code, dependencies, configuration, and metadata. This ensures that workflows can be shared, versioned, and executed consistently across different environments. Well-packaged workflows can be easily deployed, tested, and reproduced by others.
