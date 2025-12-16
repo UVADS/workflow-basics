@@ -41,6 +41,7 @@ A workflow is a sequence of tasks executed in order with dependencies to accompl
     - Persistence
     - Resilience
     - Reproducibility
+    - Portability & Sharing
 - [**Quickstart**]({{ "/docs/quickstart/" | relative_url }})
     - Airflow
     - Nextflow

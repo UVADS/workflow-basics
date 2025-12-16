@@ -15,7 +15,10 @@ Several considerations influence the selection of the most suitable tool:
 - **Learning curve:** How much time and effort are you willing to invest in learning the tool? Some tools have steeper learning curves but offer more features.
 - **Feature completeness:** Does the tool provide the features you need (e.g., scheduling, monitoring, error handling, container support, distributed execution)?
 
-There is no single solution that fits all use cases. The table below can help guide your decision. 
+There is no single solution that fits all use cases. The table below can help guide your decision.
+
+{: .note}
+This is not an exhaustive list—many additional workflow orchestration tools exist. Pull requests to add other tools are welcome!
 
 | **Orchestrator**       | **Scope**                  | **Language Support**                                | **Adoption**                | **Learning Curve** | **Location**                 | **Best-Fit Use Cases**                                                   | **Deployment Model**                                           |
 | ------------------ | ---------------------- | ----------------------------------------------- | ----------------------- | -------------- | ------------------------ | ------------------------------------------------------------------------ | -------------------------------------------------------------- |

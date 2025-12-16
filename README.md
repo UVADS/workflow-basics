@@ -29,6 +29,7 @@ cd workflow-basics
     - Persistence
     - Resilience
     - Reproducibility
+    - Portability & Sharing
 - [**Quickstart**](/docs/quickstart/)
     - Airflow
     - Nextflow
