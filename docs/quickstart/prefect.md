@@ -85,7 +85,7 @@ You have three options to observe Prefect workflow execution:
 
 **Local Prefect Server**
 
-You can start a local Prefect's UI server on your own computer to monitor workflows on your own computer. This is useful for local development.
+You can start a local Prefect UI server on your own computer to monitor workflows. This is useful for local development.
 
 ```bash
 prefect server start
@@ -104,7 +104,7 @@ prefect config set PREFECT_API_URL=<REACH_OUT_TO_N.MAGEE>
 prefect config set PREFECT_API_KEY=<REACH_OUT_TO_N.MAGEE>
 ```
 
-Your profile is added to `~/.prefect/profile.toml`. You can have many profiles and switch between the using the `prefect profile use <NAME>` command.
+Your profile is added to `~/.prefect/profile.toml`. You can have many profiles and switch between them using the `prefect profile use <NAME>` command.
  
 
 **Using Prefect Cloud**
@@ -138,11 +138,9 @@ Prefect workflows are built from two fundamental building blocks: **tasks** and 
 
 **Tasks** are the individual units of work in a Prefect workflow. They represent discrete operations, such as extracting data, transforming it, or loading it into a database. Tasks are created by applying the `@task` decorator to a Python function. When you call a task function within a flow, Prefect tracks its execution, manages its state, and provides observability features like logging and retries.
 
-**Flows** combine a group of tasks into a structured pipeline. A flow is created by applying the @flow decorator to a Python function. Flows coordinate task execution, manage dependencies between tasks, and provide the overall workflow context.
+**Flows** combine a group of tasks into a structured pipeline. A flow is created by applying the `@flow` decorator to a Python function. Flows coordinate task execution, manage dependencies between tasks, and provide the overall workflow context.
 
 Tasks and flows are chained together through function calls. When you call a task function inside a flow function, Prefect automatically creates a dependency relationship. The output of one task becomes the input to the next, creating a directed acyclic graph (DAG) of task dependencies. Prefect uses these dependencies to determine execution order: tasks that don't depend on each other can run concurrently, while dependent tasks execute sequentially.
-
-Prefect uses these dependencies to determine execution order: tasks that don't depend on each other can run concurrently, while dependent tasks execute sequentially.
 
 For example, if task B requires the output of task A, Prefect ensures task A completes before task B begins. This dependency chaining happens naturally through Python function calls—no special syntax is needed beyond the `@task` and `@flow` decorators.
 
@@ -181,7 +179,7 @@ def add(n1: int, n2: int) -> int:
 def multiply(n1: int, n2: int) -> int:
     """Return product of two numbers"""
     sleep(1)  # simulate longer processing
-    return  n1 * n2
+    return n1 * n2
 
 @task
 def mean(*args: int) -> float:
@@ -206,7 +204,7 @@ if __name__ == "__main__":
     print(f"arbitrary calc: r={r}, mean={m}")
 ```
 
-Run this with: `python examples/prefect/numbers.py`, or check out the notebook `python examples/prefect/numbers.ipynb`. The output should look similar to this:
+Run this with: `python examples/prefect/numbers.py`, or view the notebook at `examples/prefect/numbers.ipynb`. The output should look similar to this:
 
 ```code
 16:08:59.356 | INFO    | Flow run 'crouching-kittiwake' - Beginning flow run 'crouching-kittiwake' for flow 'analysis'
@@ -225,19 +223,19 @@ arbitrary calc: r=4320, mean=47.0
 
 When you execute functions decorated with `@task`/`@flow` the execution will be monitored by a Prefect Server instance. The specific instance is based on the active profile set in your `~/.prefect/profiles.toml` file.
 
-You will see a URL pointing to the Prefect Server instance in the standard output, e.g. something like .
+You will see a URL pointing to the Prefect Server instance in the standard output.
 
 ![View of sequential flow execution in Prefect Server instance]({{ "/assets/images/prefect/prefect-numbers.png" | relative_url }})
 
 {: .note :}
-Notice how the the tasks are executed sequentially based on the order of invocation in the encapsulating flow function.
+Notice how the tasks are executed sequentially based on the order of invocation in the encapsulating flow function.
 
 ### Concurrent Task Execution
 
-We can convert the above script for concurrent task execution by using `submit()` when invoking out task functions (technically, our task functions has been wrapped into callable objects with a submit method, but that's syntactic sugar).
+We can convert the above script for concurrent task execution by using `submit()` when invoking our task functions (technically, our task functions have been wrapped into callable objects with a submit method, but that's syntactic sugar).
 
 **So let's add these changes:**
-- Rename our flow as "concurrent analysis",
+- Rename our flow to "concurrent analysis",
 - redirect all print statements to be collected as Prefect logs,
 - and `submit` each function for concurrent execution.
 
@@ -255,7 +253,7 @@ def analysis():
     return r, m
 ```
 
-You can find the updated code in  `examples/prefect/numbers-concurrent.py`, or the corresponding notebook `examples/prefect/numbers-concurrent.ipynb`
+You can find the updated code in `examples/prefect/numbers-concurrent.py`, or the corresponding notebook at `examples/prefect/numbers-concurrent.ipynb`
 
 After running the script/notebook, check the task graph and execution timing in the Prefect Server instance.
 
@@ -264,7 +262,7 @@ After running the script/notebook, check the task graph and execution timing in 
 {: .note :}
 Notice how Prefect orchestrated the concurrent execution for tasks that have no dependency on each other: i.e. temporal overlap of the get_number functions, and the overlap of the mean function with the add and multiply functions.
 
-Prefect provides several integrations that control how task concurrency is controlled, see [Advanced Topics > Task Runners](#taskrunners) 
+Prefect provides several integrations for controlling task concurrency. See [Advanced Topics > Task Runners](#taskrunners) for details. 
 
 ### Timeouts
 
@@ -303,8 +301,10 @@ def data_pipeline():
     return result
 
 if __name__ == "__main__":
-    result = data_pipeline()## Restart Failed Tasks
+    result = data_pipeline()
 ```
+
+### Restart Failed Tasks
 
 Configure automatic retries for failed tasks:
 
@@ -528,7 +528,7 @@ if __name__ == "__main__":
     result = shell_workflow("example.txt")
 ```
 
-**Advanced usage with working directory and error handling:**
+**Advanced shell operation with working directory and error handling:**
 
 ```python
 from prefect import flow
@@ -581,13 +581,13 @@ if __name__ == "__main__":
 
 You can find the example scripts and notebooks in the [examples folder](https://github.com/UVADS/workflow-basics/tree/main/examples/prefect) in the Git repository.
 
-In addition, take a look at the examples in the [Additional Resources](#additional-resources)
+In addition, take a look at the official Prefect example collection under [Additional Resources](#additional-resources)
 
 ## Advanced Topics
 
 ### TaskRunners
 
-By default Prefect uses a thread pool to execute tasks and flows. Alternatively, you may choose a process pool which can be advantageous in particular with older Python versions which employ the global interpreter lock on cpu bound tasks. 
+By default Prefect uses a thread pool to execute tasks and flows. Alternatively, you may choose a process pool which can be advantageous, particularly with older Python versions that employ the global interpreter lock on CPU-bound tasks. 
 
 In addition, Prefect offers integrations with dask and ray for distributed task execution beyond single nodes. See the [Prefect TaskRunner documentation](https://docs.prefect.io/v3/concepts/task-runners) for details.
 
@@ -716,7 +716,7 @@ This declarative approach ensures that your workflows are reproducible, portable
 
 ### Automations
 
-Prefect Automations allow you to create event-driven workflows that respond to flow run states, task completions, and other triggers. Automations can send notifications, trigger other flows, or perform custom actions based on workflow execution events. 
+Prefect Automations allow you to create event-driven workflows that respond to flow run states, task completions, and other triggers. Automations can send notifications, trigger other flows, or perform custom actions based on workflow execution events.
 
 See the [Prefect Automations guide](https://docs.prefect.io/v3/how-to-guides/automations/creating-automations) for details on creating and managing automations.
 
