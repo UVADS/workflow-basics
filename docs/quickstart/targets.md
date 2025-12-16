@@ -276,9 +276,11 @@ tar_meta()
 ```
 
 
-## All Examples
+### All Example Scripts
 
-[Examples](https://github.com/UVADS/workflow-basics/tree/main/examples/targets)
+You can find the example scripts and notebooks in the [examples folder](https://github.com/UVADS/workflow-basics/tree/main/examples/targets) in the Git repository.
+
+In addition, take a look at the examples in the [Additional Resources](#additional-resources)
 
 ## Advanced Topics
 

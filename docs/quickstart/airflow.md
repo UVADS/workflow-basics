@@ -227,9 +227,11 @@ airflow backfill create --dag-id simple_data_pipeline --from-date 2025-12-15 --t
 - The DAG has scheduling information (`schedule`, `start_date`)
 - Data is managed in groups as assets.
 
-## All Example Scripts
+### All Example Scripts
 
 You can find the example scripts and notebooks in the [examples folder](https://github.com/UVADS/workflow-basics/tree/main/examples/airflow) in the Git repository.
+
+In addition, take a look at the examples in the [Additional Resources](#additional-resources)
 
 
 ## Advanced Topics

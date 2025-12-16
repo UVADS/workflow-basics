@@ -15,7 +15,7 @@ Declarative workflow definitions describe **what** should be accomplished rather
 
 - **Explicit dependencies**: Declarative definitions make task dependencies explicit and visible, allowing the orchestrator to determine execution order automatically. This eliminates hidden dependencies and execution order ambiguities.
 
-- **Idempotent execution**: Workflows defined declaratively can be safely re-run multiple times. The orchestrator tracks what has already been completed and only executes tasks that need to run, ensuring consistent results.
+- **Idempotent execution**: Idempotency means that reinvoking the same function with the same arguments will always lead to the same results, with no side effects. Orchestration tools can track execution state and skip tasks that have already completed successfully, but they have no control over the inner workings of tasks themselves. Idempotency is therefore a property of how tasks are designed and implemented, not something the orchestrator enforces. For example, a task that appends content to a file will keep appending on each run, creating unintended duplications unless the task itself checks for existing content. To achieve idempotent execution, tasks must be designed to handle re-execution gracefully—for instance, by checking if outputs already exist, using idempotent operations (e.g., overwriting instead of appending), or implementing proper state management within the task logic.
 
 - **Version control**: Declarative definitions are typically code-based (e.g., Python scripts, YAML files, DSL files) that can be version-controlled, reviewed, and shared. Changes to workflow logic are tracked in version history.
 

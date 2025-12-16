@@ -255,7 +255,7 @@ def analysis():
     return r, m
 ```
 
-You can find the updated code in  `python examples/prefect/numbers-concurrent.py`, or the corresponding notebook `python examples/prefect/numbers-concurrent.ipynb`
+You can find the updated code in  `examples/prefect/numbers-concurrent.py`, or the corresponding notebook `examples/prefect/numbers-concurrent.ipynb`
 
 After running the script/notebook, check the task graph and execution timing in the Prefect Server instance.
 

@@ -7,6 +7,16 @@ nav_order: 25
 
 # Choosing a Workflow Orchestration Framework
 
+Several considerations influence the selection of the most suitable tool:
+
+- **Nature of your tasks:** Are you orchestrating existing standalone executables or scripts (e.g., bioinformatics tools that need to run in a specific order), or are you building workflows around code you're actively developing (e.g., in Python or R)?
+- **Target platform:** What is your primary execution environment? Options include local computers, cloud services, HPC clusters, or a combination of these.
+- **Community and support:** How active is the tool's community? Is there good documentation, active maintenance, and community resources?
+- **Learning curve:** How much time and effort are you willing to invest in learning the tool? Some tools have steeper learning curves but offer more features.
+- **Feature completeness:** Does the tool provide the features you need (e.g., scheduling, monitoring, error handling, container support, distributed execution)?
+
+There is no single solution that fits all use cases. The table below can help guide your decision. 
+
 | **Orchestrator**       | **Scope**                  | **Language Support**                                | **Adoption**                | **Learning Curve** | **Location**                 | **Best-Fit Use Cases**                                                   | **Deployment Model**                                           |
 | ------------------ | ---------------------- | ----------------------------------------------- | ----------------------- | -------------- | ------------------------ | ------------------------------------------------------------------------ | -------------------------------------------------------------- |
 | [**Airflow**](https://airflow.apache.org/)        | Generalist ETL         | Python                                          | Very broad              | Moderate–Steep | Cloud / On-prem / Hybrid | Enterprise ETL/ELT, scheduled business workflows                         | Self-host, Kubernetes, or managed services (MWAA, Composer)    |
